@@ -17,6 +17,11 @@ Run once for testing:
 
 Run continuously:
     python eewrep_monitor.py --repo-dir C:\\path\\to\\EEWS_GAS_Dashboard_Data
+
+Create .env in the repository root. GITHUB_TOKEN must be a GitHub Personal
+Access Token (PAT), not the GitHub account password:
+    GITHUB_USERNAME=your_github_username
+    GITHUB_TOKEN=github_pat_xxxxxxxxxxxxxxxxxxxx
 """
 
 from __future__ import annotations
@@ -35,7 +40,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 
 LOG = logging.getLogger("eewrep_monitor")
@@ -273,14 +278,23 @@ def archive_rep(rep: ParsedRep, archive_root: Path) -> Path:
     return destination
 
 
-def run_git(repo_dir: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+def run_git(
+    repo_dir: Path,
+    *args: str,
+    check: bool = True,
+    extra_env: Mapping[str, str] | None = None,
+) -> subprocess.CompletedProcess[str]:
     command = ["git", "-C", str(repo_dir), *args]
+    environment = os.environ.copy()
+    if extra_env:
+        environment.update(extra_env)
     return subprocess.run(
         command,
         check=check,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        env=environment,
     )
 
 
@@ -291,9 +305,137 @@ def verify_git_repository(repo_dir: Path) -> None:
         raise RuntimeError(f"--repo-dir must be the Git repository root: {actual}")
 
 
-def sync_remote(repo_dir: Path, remote: str, branch: str) -> None:
+def load_dotenv(path: Path) -> dict[str, str]:
+    """Load KEY=VALUE credentials without requiring python-dotenv."""
+    if not path.is_file():
+        raise RuntimeError(
+            f"missing credential file: {path}\n"
+            "Create it with GITHUB_USERNAME and GITHUB_TOKEN."
+        )
+    values: dict[str, str] = {}
+    for line_number, raw_line in enumerate(
+        path.read_text(encoding="utf-8-sig").splitlines(), start=1
+    ):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        if "=" not in line:
+            raise RuntimeError(f"invalid .env line {line_number}: expected KEY=VALUE")
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip()
+        if value and value[0] in {"'", '"'}:
+            if len(value) < 2 or value[-1] != value[0]:
+                raise RuntimeError(f"invalid quote on .env line {line_number}")
+            value = value[1:-1]
+        values[key] = value
+    return values
+
+
+def protect_env_file(repo_dir: Path, env_path: Path) -> None:
+    """Exclude the credential file locally and refuse to use it if tracked."""
+    try:
+        relative = env_path.resolve().relative_to(repo_dir.resolve()).as_posix()
+    except ValueError as exc:
+        raise RuntimeError("--env-file must be inside --repo-dir") from exc
+
+    tracked = run_git(
+        repo_dir, "ls-files", "--error-unmatch", "--", relative, check=False
+    )
+    if tracked.returncode == 0:
+        raise RuntimeError(
+            f"{relative} is already tracked. Remove it before use:\n"
+            f"git rm --cached -- {relative}"
+        )
+
+    git_path = run_git(repo_dir, "rev-parse", "--git-path", "info/exclude")
+    exclude_path = Path(git_path.stdout.strip())
+    if not exclude_path.is_absolute():
+        exclude_path = repo_dir / exclude_path
+    exclude_path.parent.mkdir(parents=True, exist_ok=True)
+    existing = (
+        exclude_path.read_text(encoding="utf-8", errors="replace").splitlines()
+        if exclude_path.exists()
+        else []
+    )
+    if relative not in {line.strip() for line in existing}:
+        with exclude_path.open("a", encoding="utf-8", newline="\n") as handle:
+            if existing and existing[-1] != "":
+                handle.write("\n")
+            handle.write(f"{relative}\n")
+
+
+def git_auth_environment(repo_dir: Path, env_path: Path) -> dict[str, str]:
+    """
+    Supply credentials with GIT_ASKPASS.
+
+    The token is never placed in the remote URL, command arguments, repository,
+    or askpass helper file.
+    """
+    values = load_dotenv(env_path)
+    username = values.get("GITHUB_USERNAME", "").strip()
+    token = values.get("GITHUB_TOKEN", "").strip()
+    if not username or not token:
+        raise RuntimeError(
+            f"{env_path} must define non-empty GITHUB_USERNAME and GITHUB_TOKEN"
+        )
+
+    git_path = run_git(repo_dir, "rev-parse", "--git-path", "eewrep_auth")
+    helper_dir = Path(git_path.stdout.strip())
+    if not helper_dir.is_absolute():
+        helper_dir = repo_dir / helper_dir
+    helper_dir.mkdir(parents=True, exist_ok=True)
+
+    if os.name == "nt":
+        helper = helper_dir / "git_askpass.bat"
+        helper.write_text(
+            "@echo off\r\n"
+            'echo %~1 | findstr /I "Username" >nul\r\n'
+            "if %errorlevel%==0 (\r\n"
+            "  echo %EEW_GIT_USERNAME%\r\n"
+            ") else (\r\n"
+            "  echo %EEW_GIT_TOKEN%\r\n"
+            ")\r\n",
+            encoding="utf-8",
+        )
+    else:
+        helper = helper_dir / "git_askpass.sh"
+        helper.write_text(
+            "#!/bin/sh\n"
+            'case "$1" in\n'
+            '  *sername*) printf "%s\\n" "$EEW_GIT_USERNAME" ;;\n'
+            '  *) printf "%s\\n" "$EEW_GIT_TOKEN" ;;\n'
+            "esac\n",
+            encoding="utf-8",
+        )
+        helper.chmod(0o700)
+
+    return {
+        "GIT_ASKPASS": str(helper),
+        "GIT_TERMINAL_PROMPT": "0",
+        "EEW_GIT_USERNAME": username,
+        "EEW_GIT_TOKEN": token,
+    }
+
+
+def sync_remote(
+    repo_dir: Path,
+    remote: str,
+    branch: str,
+    git_env: Mapping[str, str],
+) -> None:
     # Pull before reading the summary so concurrent remote updates are retained.
-    run_git(repo_dir, "pull", "--rebase", "--autostash", remote, branch)
+    run_git(
+        repo_dir,
+        "pull",
+        "--rebase",
+        "--autostash",
+        remote,
+        branch,
+        extra_env=git_env,
+    )
 
 
 def commit_and_push(
@@ -301,6 +443,7 @@ def commit_and_push(
     relative_paths: list[Path],
     remote: str,
     branch: str,
+    git_env: Mapping[str, str],
 ) -> bool:
     if not relative_paths:
         return False
@@ -315,7 +458,7 @@ def commit_and_push(
     count = sum(path.suffix.lower() == ".rep" for path in relative_paths)
     message = f"Append {count} eew .rep solution{'s' if count != 1 else ''}"
     run_git(repo_dir, "commit", "-m", message)
-    run_git(repo_dir, "push", remote, f"HEAD:{branch}")
+    run_git(repo_dir, "push", remote, f"HEAD:{branch}", extra_env=git_env)
     return True
 
 
@@ -326,8 +469,12 @@ def process_once(args: argparse.Namespace) -> int:
     summary_path = repo_dir / args.summary
 
     verify_git_repository(repo_dir)
+    git_env: dict[str, str] = {}
     if not args.no_git:
-        sync_remote(repo_dir, args.remote, args.branch)
+        env_path = repo_dir / args.env_file
+        protect_env_file(repo_dir, env_path)
+        git_env = git_auth_environment(repo_dir, env_path)
+        sync_remote(repo_dir, args.remote, args.branch, git_env)
 
     events = load_summary(summary_path)
     known = known_rep_names(events)
@@ -397,7 +544,7 @@ def process_once(args: argparse.Namespace) -> int:
     )
     if args.no_git:
         LOG.info("Updated %s; Git actions disabled", summary_path)
-    elif commit_and_push(repo_dir, changed, args.remote, args.branch):
+    elif commit_and_push(repo_dir, changed, args.remote, args.branch, git_env):
         LOG.info("Committed and pushed %d parsed .rep files", len(parsed))
     return len(parsed)
 
@@ -421,6 +568,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="parent for YYYY_MM archive folders (default: repository root)",
     )
     parser.add_argument("--summary", default="eewrep_summary.json")
+    parser.add_argument(
+        "--env-file",
+        default=".env",
+        help="credential file inside the repository (default: .env)",
+    )
     parser.add_argument("--remote", default="origin")
     parser.add_argument("--branch", default="main")
     parser.add_argument("--interval", type=int, default=300)
