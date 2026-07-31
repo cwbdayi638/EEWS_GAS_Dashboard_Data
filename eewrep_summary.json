@@ -88817,5 +88817,31 @@
         "rep_file": "20260731024016_n1_fst.rep"
       }
     ]
+  },
+  {
+    "event_index": 1410,
+    "origin_time": "2026-07-31T02:48:18.00",
+    "lat": 24.5683,
+    "lon": 121.1995,
+    "depth": 10.0,
+    "magnitude_mpd": 3.43,
+    "author": "params",
+    "solutions": [
+      {
+        "index": 1,
+        "dt_ref": 11.68,
+        "type": "Mpd",
+        "mpd": 3.43,
+        "lat": 24.568,
+        "lon": 121.2,
+        "depth": 10.0,
+        "origin_time": "2026-07-31T02:48:18.00",
+        "station_count": 4,
+        "creation_time": "02:48:29.68",
+        "author": "params",
+        "dt_curr": 11.68,
+        "rep_file": "20260731024829_n1_fst.rep"
+      }
+    ]
   }
 ]
