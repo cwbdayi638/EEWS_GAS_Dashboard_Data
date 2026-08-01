@@ -89215,5 +89215,46 @@
         "rep_file": "20260801010716_n1_fst.rep"
       }
     ]
+  },
+  {
+    "event_index": 1423,
+    "origin_time": "2026-08-01T03:35:37.92",
+    "lat": 23.6485,
+    "lon": 121.4314,
+    "depth": 10.0,
+    "magnitude_mpd": 3.74,
+    "author": "params",
+    "solutions": [
+      {
+        "index": 1,
+        "dt_ref": 8.3,
+        "type": "Mpd",
+        "mpd": 3.74,
+        "lat": 23.648,
+        "lon": 121.431,
+        "depth": 10.0,
+        "origin_time": "2026-08-01T03:35:37.92",
+        "station_count": 4,
+        "creation_time": "03:35:46.22",
+        "author": "params",
+        "dt_curr": 8.3,
+        "rep_file": "20260801033546_n1_fst.rep"
+      },
+      {
+        "index": 2,
+        "dt_ref": 27.73,
+        "type": "Mpd",
+        "mpd": 3.72,
+        "lat": 23.597,
+        "lon": 121.433,
+        "depth": 10.0,
+        "origin_time": "2026-08-01T03:35:41.41",
+        "station_count": 5,
+        "creation_time": "03:36:09.14",
+        "author": "params",
+        "dt_curr": 31.22,
+        "rep_file": "20260801033609_n2_fst.rep"
+      }
+    ]
   }
 ]
