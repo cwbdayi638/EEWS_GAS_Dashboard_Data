@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-08-04T17:36:39.02Z",
+  "timestamp": "2026-08-04T17:37:58.42Z",
   "wave_rings": {
     "WAVE_RING_CWASN": {
       "ring_name": "WAVE_RING_CWASN",
-      "check_time": "2026-08-04T17:36:39.02Z",
+      "check_time": "2026-08-04T17:37:58.42Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -14,7 +14,7 @@
     },
     "WAVE_RING_TSMIP": {
       "ring_name": "WAVE_RING_TSMIP",
-      "check_time": "2026-08-04T17:36:39.02Z",
+      "check_time": "2026-08-04T17:37:58.42Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -27,7 +27,7 @@
   "pick_rings": {
     "PICK_RING": {
       "ring_name": "PICK_RING",
-      "check_time": "2026-08-04T17:36:39.02Z",
+      "check_time": "2026-08-04T17:37:58.42Z",
       "message_count": 0,
       "message_types": {},
       "latest_message_time": null,
@@ -36,7 +36,7 @@
     },
     "EEW_RING": {
       "ring_name": "EEW_RING",
-      "check_time": "2026-08-04T17:37:02.03Z",
+      "check_time": "2026-08-04T17:38:21.42Z",
       "message_count": 0,
       "message_types": {},
       "latest_message_time": null,
