@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-08-04T06:18:06.45Z",
+  "wave_rings": {
+    "WAVE_RING_CWASN": {
+      "ring_name": "WAVE_RING_CWASN",
+      "check_time": "2026-08-04T06:18:06.45Z",
+      "station_count": 0,
+      "channel_count": 0,
+      "latest_packet_time": null,
+      "data_gap_seconds": null,
+      "stations": [],
+      "raw_output": "[Errno 2] No such file or directory: 'snifwave'",
+      "error": "snifwave failed: [Errno 2] No such file or directory: 'snifwave'"
+    },
+    "WAVE_RING_TSMIP": {
+      "ring_name": "WAVE_RING_TSMIP",
+      "check_time": "2026-08-04T06:18:06.45Z",
+      "station_count": 0,
+      "channel_count": 0,
+      "latest_packet_time": null,
+      "data_gap_seconds": null,
+      "stations": [],
+      "raw_output": "[Errno 2] No such file or directory: 'snifwave'",
+      "error": "snifwave failed: [Errno 2] No such file or directory: 'snifwave'"
+    }
+  },
+  "pick_rings": {
+    "PICK_RING": {
+      "ring_name": "PICK_RING",
+      "check_time": "2026-08-04T06:18:06.46Z",
+      "message_count": 0,
+      "message_types": {},
+      "latest_message_time": null,
+      "raw_output": "Command timeout after 23s",
+      "error": "sniffring failed: Command timeout after 23s"
+    },
+    "EEW_RING": {
+      "ring_name": "EEW_RING",
+      "check_time": "2026-08-04T06:18:29.46Z",
+      "message_count": 0,
+      "message_types": {},
+      "latest_message_time": null,
+      "raw_output": "Command timeout after 23s",
+      "error": "sniffring failed: Command timeout after 23s"
+    }
+  }
+}
