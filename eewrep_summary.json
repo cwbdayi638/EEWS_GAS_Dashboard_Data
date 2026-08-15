@@ -99436,6 +99436,21 @@
         "author": "params",
         "dt_curr": 10.76,
         "rep_file": "20260815152120_n6.rep"
+      },
+      {
+        "index": 18,
+        "dt_ref": 18.2,
+        "type": "Mpd",
+        "mpd": 3.88,
+        "lat": 23.765,
+        "lon": 121.214,
+        "depth": 10.0,
+        "origin_time": "2026-08-15T15:21:06.48",
+        "station_count": 21,
+        "creation_time": "15:21:24.68",
+        "author": "params",
+        "dt_curr": 15.29,
+        "rep_file": "20260815152124_n7.rep"
       }
     ]
   }
