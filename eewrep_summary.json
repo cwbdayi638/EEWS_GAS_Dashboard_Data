@@ -99833,5 +99833,87 @@
         "rep_file": "20260817042142_n1_fst.rep"
       }
     ]
+  },
+  {
+    "event_index": 1596,
+    "origin_time": "2026-08-17T04:55:41.13",
+    "lat": 23.5338,
+    "lon": 121.2586,
+    "depth": 10.0,
+    "magnitude_mpd": 3.09,
+    "author": "params",
+    "solutions": [
+      {
+        "index": 1,
+        "dt_ref": 9.5,
+        "type": "Mpd",
+        "mpd": 3.09,
+        "lat": 23.534,
+        "lon": 121.259,
+        "depth": 10.0,
+        "origin_time": "2026-08-17T04:55:41.13",
+        "station_count": 4,
+        "creation_time": "04:55:50.63",
+        "author": "params",
+        "dt_curr": 9.5,
+        "rep_file": "20260817045550_n1_fst.rep"
+      },
+      {
+        "index": 2,
+        "dt_ref": 9.78,
+        "type": "Mpd",
+        "mpd": 3.15,
+        "lat": 23.414,
+        "lon": 121.229,
+        "depth": 10.0,
+        "origin_time": "2026-08-17T04:55:41.85",
+        "station_count": 5,
+        "creation_time": "04:55:51.63",
+        "author": "params",
+        "dt_curr": 10.5,
+        "rep_file": "20260817045551_n2_fst.rep"
+      },
+      {
+        "index": 3,
+        "dt_ref": 9.7,
+        "type": "Mpd",
+        "mpd": 3.28,
+        "lat": 23.506,
+        "lon": 121.183,
+        "depth": 10.0,
+        "origin_time": "2026-08-17T04:55:42.43",
+        "station_count": 6,
+        "creation_time": "04:55:52.13",
+        "author": "params",
+        "dt_curr": 11.0,
+        "rep_file": "20260817045552_n3_fst.rep"
+      }
+    ]
+  },
+  {
+    "event_index": 1597,
+    "origin_time": "2026-08-17T04:55:43.03",
+    "lat": 23.9439,
+    "lon": 120.8438,
+    "depth": 40.0,
+    "magnitude_mpd": 4.03,
+    "author": "params",
+    "solutions": [
+      {
+        "index": 1,
+        "dt_ref": 12.25,
+        "type": "Mpd",
+        "mpd": 4.03,
+        "lat": 23.944,
+        "lon": 120.844,
+        "depth": 40.0,
+        "origin_time": "2026-08-17T04:55:43.03",
+        "station_count": 5,
+        "creation_time": "04:55:55.28",
+        "author": "params",
+        "dt_curr": 12.25,
+        "rep_file": "20260817045555_n1.rep"
+      }
+    ]
   }
 ]
