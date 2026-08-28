@@ -109258,6 +109258,21 @@
         "author": "params",
         "dt_curr": 8.74,
         "rep_file": "20260828195825_n3_fst.rep"
+      },
+      {
+        "index": 4,
+        "dt_ref": 44.45,
+        "type": "Mpd",
+        "mpd": 2.78,
+        "lat": 23.221,
+        "lon": 120.509,
+        "depth": 10.0,
+        "origin_time": "2026-08-28T19:58:18.05",
+        "station_count": 6,
+        "creation_time": "19:59:02.50",
+        "author": "params",
+        "dt_curr": 45.28,
+        "rep_file": "20260828195902_n1.rep"
       }
     ]
   }
