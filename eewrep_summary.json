@@ -109275,5 +109275,87 @@
         "rep_file": "20260828195902_n1.rep"
       }
     ]
+  },
+  {
+    "event_index": 1748,
+    "origin_time": "2026-08-28T21:57:27.98",
+    "lat": 24.5874,
+    "lon": 121.1392,
+    "depth": 10.0,
+    "magnitude_mpd": 3.43,
+    "author": "params",
+    "solutions": [
+      {
+        "index": 1,
+        "dt_ref": 14.47,
+        "type": "Mpd",
+        "mpd": 3.43,
+        "lat": 24.587,
+        "lon": 121.139,
+        "depth": 10.0,
+        "origin_time": "2026-08-28T21:57:27.98",
+        "station_count": 4,
+        "creation_time": "21:57:42.45",
+        "author": "params",
+        "dt_curr": 14.47,
+        "rep_file": "20260828215742_n1_fst.rep"
+      },
+      {
+        "index": 2,
+        "dt_ref": 14.54,
+        "type": "Mpd",
+        "mpd": 2.96,
+        "lat": 24.49,
+        "lon": 121.101,
+        "depth": 10.0,
+        "origin_time": "2026-08-28T21:57:29.41",
+        "station_count": 5,
+        "creation_time": "21:57:43.95",
+        "author": "params",
+        "dt_curr": 15.97,
+        "rep_file": "20260828215743_n2_fst.rep"
+      }
+    ]
+  },
+  {
+    "event_index": 1749,
+    "origin_time": "2026-08-28T21:57:36.43",
+    "lat": 24.1956,
+    "lon": 120.8859,
+    "depth": 10.0,
+    "magnitude_mpd": 3.14,
+    "author": "params",
+    "solutions": [
+      {
+        "index": 1,
+        "dt_ref": 11.62,
+        "type": "Mpd",
+        "mpd": 3.14,
+        "lat": 24.196,
+        "lon": 120.886,
+        "depth": 10.0,
+        "origin_time": "2026-08-28T21:57:36.43",
+        "station_count": 4,
+        "creation_time": "21:57:48.05",
+        "author": "params",
+        "dt_curr": 11.62,
+        "rep_file": "20260828215748_n1_fst.rep"
+      },
+      {
+        "index": 2,
+        "dt_ref": 17.83,
+        "type": "Mpd",
+        "mpd": 3.87,
+        "lat": 24.084,
+        "lon": 120.776,
+        "depth": 10.0,
+        "origin_time": "2026-08-28T21:57:38.83",
+        "station_count": 5,
+        "creation_time": "21:57:56.66",
+        "author": "params",
+        "dt_curr": 20.23,
+        "rep_file": "20260828215756_n2_fst.rep"
+      }
+    ]
   }
 ]
