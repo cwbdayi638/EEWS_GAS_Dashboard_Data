@@ -111105,5 +111105,91 @@
         "rep_file": "20260831082409_n8_fst.rep"
       }
     ]
+  },
+  {
+    "event_index": 1778,
+    "origin_time": "2026-08-31T09:29:40.27",
+    "lat": 22.8785,
+    "lon": 121.1023,
+    "depth": 10.0,
+    "magnitude_mpd": 2.95,
+    "author": "params",
+    "solutions": [
+      {
+        "index": 1,
+        "dt_ref": 6.17,
+        "type": "Mpd",
+        "mpd": 2.95,
+        "lat": 22.878,
+        "lon": 121.102,
+        "depth": 10.0,
+        "origin_time": "2026-08-31T09:29:40.27",
+        "station_count": 4,
+        "creation_time": "09:29:46.44",
+        "author": "params",
+        "dt_curr": 6.17,
+        "rep_file": "20260831092946_n1_fst.rep"
+      },
+      {
+        "index": 2,
+        "dt_ref": 6.09,
+        "type": "Mpd",
+        "mpd": 2.84,
+        "lat": 22.872,
+        "lon": 121.109,
+        "depth": 10.0,
+        "origin_time": "2026-08-31T09:29:40.35",
+        "station_count": 5,
+        "creation_time": "09:29:46.44",
+        "author": "params",
+        "dt_curr": 6.17,
+        "rep_file": "20260831092946_n2_fst.rep"
+      },
+      {
+        "index": 3,
+        "dt_ref": 7.29,
+        "type": "Mpd",
+        "mpd": 2.84,
+        "lat": 22.909,
+        "lon": 121.113,
+        "depth": 10.0,
+        "origin_time": "2026-08-31T09:29:40.65",
+        "station_count": 6,
+        "creation_time": "09:29:47.94",
+        "author": "params",
+        "dt_curr": 7.67,
+        "rep_file": "20260831092947_n3_fst.rep"
+      },
+      {
+        "index": 4,
+        "dt_ref": 7.93,
+        "type": "Mpd",
+        "mpd": 3.07,
+        "lat": 22.918,
+        "lon": 121.041,
+        "depth": 10.0,
+        "origin_time": "2026-08-31T09:29:40.07",
+        "station_count": 6,
+        "creation_time": "09:29:48.00",
+        "author": "params",
+        "dt_curr": 7.73,
+        "rep_file": "20260831092948_n1.rep"
+      },
+      {
+        "index": 5,
+        "dt_ref": 8.21,
+        "type": "Mpd",
+        "mpd": 3.27,
+        "lat": 22.92,
+        "lon": 121.062,
+        "depth": 10.0,
+        "origin_time": "2026-08-31T09:29:40.14",
+        "station_count": 9,
+        "creation_time": "09:29:48.35",
+        "author": "params",
+        "dt_curr": 8.08,
+        "rep_file": "20260831092948_n4_fst.rep"
+      }
+    ]
   }
 ]
