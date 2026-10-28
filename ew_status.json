@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-28T06:18:27.42Z",
+  "timestamp": "2026-10-28T06:19:27.38Z",
   "wave_rings": {
     "WAVE_RING_CWASN": {
       "ring_name": "WAVE_RING_CWASN",
-      "check_time": "2026-10-28T06:18:27.42Z",
+      "check_time": "2026-10-28T06:19:27.38Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -14,7 +14,7 @@
     },
     "WAVE_RING_TSMIP": {
       "ring_name": "WAVE_RING_TSMIP",
-      "check_time": "2026-10-28T06:18:30.02Z",
+      "check_time": "2026-10-28T06:19:30.18Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -27,7 +27,7 @@
   "pick_rings": {
     "EEW_RING": {
       "ring_name": "EEW_RING",
-      "check_time": "2026-10-28T06:18:33.09Z",
+      "check_time": "2026-10-28T06:19:33.25Z",
       "message_count": 0,
       "message_types": {},
       "latest_message_time": null,
@@ -38,7 +38,7 @@
   "pick_files": {
     "pfile_P": {
       "file_path": "/opt/earthworm/run_working/params/pfile_P.p12",
-      "check_time": "2026-10-28T06:18:33.03Z",
+      "check_time": "2026-10-28T06:19:33.19Z",
       "line_count": 369453,
       "last_lines": [
         "CHN3 EHZ TW 10 120.364300 23.075100 0.463593 0.006978 0.000132 0.552075 1793166851.21000 3 2 2",
