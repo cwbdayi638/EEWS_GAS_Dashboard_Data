@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-28T07:21:00.51Z",
+  "timestamp": "2026-10-28T07:22:00.50Z",
   "wave_rings": {
     "WAVE_RING_CWASN": {
       "ring_name": "WAVE_RING_CWASN",
-      "check_time": "2026-10-28T07:21:00.51Z",
+      "check_time": "2026-10-28T07:22:00.50Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -14,7 +14,7 @@
     },
     "WAVE_RING_TSMIP": {
       "ring_name": "WAVE_RING_TSMIP",
-      "check_time": "2026-10-28T07:21:03.11Z",
+      "check_time": "2026-10-28T07:22:03.11Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -27,7 +27,7 @@
   "pick_rings": {
     "EEW_RING": {
       "ring_name": "EEW_RING",
-      "check_time": "2026-10-28T07:21:06.19Z",
+      "check_time": "2026-10-28T07:22:06.18Z",
       "message_count": 0,
       "message_types": {},
       "latest_message_time": null,
@@ -38,7 +38,7 @@
   "pick_files": {
     "pfile_P": {
       "file_path": "/opt/earthworm/run_working/params/pfile_P.p12",
-      "check_time": "2026-10-28T07:21:06.12Z",
+      "check_time": "2026-10-28T07:22:06.11Z",
       "line_count": 369677,
       "last_lines": [
         "C126 HLZ TW 10 120.531000 23.699000 1.104672 0.005575 0.000292 0.000000 1793170922.78000 1 1 2",
