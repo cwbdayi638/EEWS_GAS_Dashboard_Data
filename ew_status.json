@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-28T08:10:00.49Z",
+  "timestamp": "2026-10-28T08:11:00.48Z",
   "wave_rings": {
     "WAVE_RING_CWASN": {
       "ring_name": "WAVE_RING_CWASN",
-      "check_time": "2026-10-28T08:10:00.49Z",
+      "check_time": "2026-10-28T08:11:00.48Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -14,7 +14,7 @@
     },
     "WAVE_RING_TSMIP": {
       "ring_name": "WAVE_RING_TSMIP",
-      "check_time": "2026-10-28T08:10:03.09Z",
+      "check_time": "2026-10-28T08:11:03.08Z",
       "station_count": 0,
       "channel_count": 0,
       "latest_packet_time": null,
@@ -27,7 +27,7 @@
   "pick_rings": {
     "EEW_RING": {
       "ring_name": "EEW_RING",
-      "check_time": "2026-10-28T08:10:06.16Z",
+      "check_time": "2026-10-28T08:11:06.15Z",
       "message_count": 0,
       "message_types": {},
       "latest_message_time": null,
@@ -38,7 +38,7 @@
   "pick_files": {
     "pfile_P": {
       "file_path": "/opt/earthworm/run_working/params/pfile_P.p12",
-      "check_time": "2026-10-28T08:10:06.09Z",
+      "check_time": "2026-10-28T08:11:06.09Z",
       "line_count": 369799,
       "last_lines": [
         "NJS HNZ TW 00 121.637752 25.225792 0.306958 0.094910 0.034758 0.000000 1793173934.23000 1 1 2",
