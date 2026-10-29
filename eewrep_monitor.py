@@ -12,6 +12,12 @@ Default behavior:
   * commit only the summary and archived .rep files, then push origin/main;
   * skip a file whose basename already exists in the summary.
 
+Google Drive 上傳（選用）：
+  * 在 .env 中設定 GDRIVE_SERVICE_ACCOUNT_JSON 與 GDRIVE_FOLDER_ID，
+    腳本會在每次週期結束後自動將 eewrep_summary.json 與歸檔的 .rep 檔
+    上傳至 Google Drive；GitHub 程式碼庫本身不受影響。
+  * 使用 --no-drive 旗標可停用 Drive 上傳。
+
 Run once for testing:
     python eewrep_monitor.py --once --repo-dir C:\\path\\to\\EEWS_GAS_Dashboard_Data
 
@@ -22,6 +28,10 @@ Create .env in the repository root. GITHUB_TOKEN must be a GitHub Personal
 Access Token (PAT), not the GitHub account password:
     GITHUB_USERNAME=your_github_username
     GITHUB_TOKEN=github_pat_xxxxxxxxxxxxxxxxxxxx
+
+For Google Drive upload, also add to .env:
+    GDRIVE_SERVICE_ACCOUNT_JSON=/path/to/service_account.json
+    GDRIVE_FOLDER_ID=your_google_drive_folder_id
 """
 
 from __future__ import annotations
@@ -41,6 +51,13 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Mapping
+
+# Google Drive 上傳模組（選用）
+try:
+    from drive_uploader import DriveUploader
+    _DRIVE_UPLOADER_AVAILABLE = True
+except ImportError:
+    _DRIVE_UPLOADER_AVAILABLE = False
 
 
 LOG = logging.getLogger("eewrep_monitor")
@@ -546,7 +563,68 @@ def process_once(args: argparse.Namespace) -> int:
         LOG.info("Updated %s; Git actions disabled", summary_path)
     elif commit_and_push(repo_dir, changed, args.remote, args.branch, git_env):
         LOG.info("Committed and pushed %d parsed .rep files", len(parsed))
+
+    # ── Google Drive 上傳（選用）──────────────────────────────────────────
+    if not getattr(args, "no_drive", False):
+        _drive_upload_eewrep(
+            args=args,
+            repo_dir=repo_dir,
+            summary_path=summary_path,
+            archived_paths=[repo_dir / p for p in archived_relative],
+            parsed_reps=parsed,
+        )
+
     return len(parsed)
+
+
+def _drive_upload_eewrep(
+    args: argparse.Namespace,
+    repo_dir: Path,
+    summary_path: Path,
+    archived_paths: list[Path],
+    parsed_reps: list["ParsedRep"],
+) -> None:
+    """將 eewrep_summary.json 及歸檔的 .rep 檔案上傳至 Google Drive。"""
+    if not _DRIVE_UPLOADER_AVAILABLE:
+        LOG.debug("drive_uploader 模組不存在，跳過 Drive 上傳。")
+        return
+
+    env_path = repo_dir / getattr(args, "env_file", ".env")
+    try:
+        uploader = DriveUploader.from_env(env_path)
+    except RuntimeError as exc:
+        LOG.warning("Drive 上傳跳過（設定不完整）：%s", exc)
+        return
+    except Exception as exc:
+        LOG.error("Drive 上傳初始化失敗：%s", exc)
+        return
+
+    # 上傳 summary JSON
+    if summary_path.exists():
+        try:
+            uploader.upload_json_string(
+                summary_path.name,
+                summary_path.read_text(encoding="utf-8"),
+            )
+        except Exception as exc:
+            LOG.error("Drive 上傳 %s 失敗：%s", summary_path.name, exc)
+
+    # 為每個歸檔的 .rep 檔上傳至對應 YYYY_MM 子資料夾
+    rep_map: dict[str, "ParsedRep"] = {r.path.name: r for r in parsed_reps}
+    for archived in archived_paths:
+        if archived.suffix.lower() != ".rep":
+            continue
+        try:
+            # 嘗試從解析結果取 report_time；找不到則用 mtime
+            if archived.name in rep_map:
+                report_time = rep_map[archived.name].report_time
+            elif archived.exists():
+                report_time = datetime.fromtimestamp(archived.stat().st_mtime)
+            else:
+                continue
+            uploader.upload_rep_to_monthly_folder(archived, report_time)
+        except Exception as exc:
+            LOG.error("Drive 上傳 %s 失敗：%s", archived.name, exc)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -584,6 +662,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--no-git",
         action="store_true",
         help="parse/archive/update JSON without pull, commit, or push",
+    )
+    parser.add_argument(
+        "--no-drive",
+        action="store_true",
+        help="disable Google Drive upload even if .env contains Drive credentials",
     )
     parser.add_argument("--verbose", action="store_true")
     return parser
